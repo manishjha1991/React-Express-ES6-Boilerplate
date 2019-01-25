@@ -1,0 +1,77 @@
+.dropdown-content {
+  padding-bottom: 15px;
+  margin-left: 641px;
+}
+
+.selectBox {
+  margin-left: 737px;
+  width: 500px;
+  height: 30px;
+}
+.form__row {
+  width: 75%;
+  background: #eee;
+  border: solid 1px #eee;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 40px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 15px;
+}
+.label {
+  width: 30%;
+  text-align: end;
+  padding-right: 20px;
+}
+.value {
+  width: 70%;
+  height: 50px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+}
+.successMsg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  background: #42ad42;
+  color: #fff;
+  width: 30%;
+  margin: auto;
+  margin-top: 20px;
+}
+.btnClass {
+  padding: 15px 30px;
+  background: #53af50;
+  border: solid 1px #53af50;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+.btnClass:hover {
+  background-color: rgba(83, 185, 83, 0.8);
+}
+
+.oval {
+  height: 200px;
+  width: 200px;
+  /* background-color: #17a2b8; */
+  border-radius: 50%;
+  margin: 80px;
+  float: left;
+  text-align: center;
+  background-color: #FF0000;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+
