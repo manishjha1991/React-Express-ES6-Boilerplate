@@ -10,6 +10,7 @@ class Main extends React.Component {
     };
 
     this.handleUploadImage = this.handleUploadImage.bind(this);
+    this.handleLanguage=this.handleLanguage.bind(this)
   }
 
   handleUploadImage(ev) {
@@ -28,16 +29,16 @@ class Main extends React.Component {
       });
     });
   }
-
+  
+  handleLanguage(){
+     this.props         
+}
   render() {
     return (
         <div className="row">
 				<label className="label" for="Store Manager Name">
-				  <b>Select Store</b>
-				</label>
-				
-			 
-      <form onSubmit={this.handleUploadImage}>
+				  <b>Upload Image</b>
+                  <form onSubmit={this.handleUploadImage}>
         <div>
           <input ref={(ref) => { this.uploadInput = ref; }} type="file" />
         </div>
@@ -50,6 +51,10 @@ class Main extends React.Component {
         </div>
         <img src={this.state.imageURL} alt="img" />
       </form>
+				</label>
+				
+			 
+      
       </div>
     );
   }
