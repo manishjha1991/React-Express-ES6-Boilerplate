@@ -11,7 +11,7 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack.config.dev';
-
+const fileUpload = require('express-fileupload');
 let app = express();
 
 const compiler = webpack(webpackConfig)
@@ -22,7 +22,7 @@ app.use(webpackMiddleware(compiler, {
 	noInfo: true 
 }));
 app.use(webpackHotMiddleware(compiler));
-
+app.use(fileUpload());
 app.get('/home', (req,res) => {
 	res.sendFile(path.join(__dirname,'./index.html'));
 });
@@ -30,23 +30,20 @@ app.get('/home', (req,res) => {
 
 app.use(cors());
 app.use(busboy());
-app.use(express.static("public"));
-app.route("/upload").post(function(req, res, next) {
-  var fstream;
-  req.pipe(req.busboy);
-  req.busboy.on("file", function(fieldname, file, filename) {
-    console.log("Uploading: " + filename);
-
-    //Path where image will be uploaded
-    fstream = fs.createWriteStream(__dirname + "/img/" + filename);
-    let pathTosendClient = __dirname + "/img/" + filename;
-    file.pipe(fstream);
-    fstream.on("close", function() {
-      console.log("Upload Finished of " + filename);
-      res.send(pathTosendClient); //where to go next
-    });
-  });
-});
+app.use('/public', express.static(__dirname + '/public'));
+app.post('/upload', (req, res, next) => {
+	console.log(req);
+	let imageFile = req.files.file;
+  
+	imageFile.mv(`${__dirname}/public/${req.body.filename}.jpg`, function(err) {
+	  if (err) {
+		return res.status(500).send(err);
+	  }
+  
+	  res.json({file: `public/${req.body.filename}.jpg`});
+	});
+  
+  })
 
 const isProduction = getEnv("NODE_ENV") === "production";
 

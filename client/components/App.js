@@ -4,6 +4,7 @@ import 'style.css'
 import "../css/Device.css";
 import axios, { post } from "axios";
 import HeaderComponent from "./HeaderComponent";
+import Main from './FileUpload';
 import {uniqBy} from "lodash";
 
 class App extends React.Component {
@@ -294,15 +295,18 @@ class App extends React.Component {
 	  }
 	
 	  onFormSubmit (e) {
+		  console.log("yooo",this.state.file)
 		e.preventDefault(); // Stop form submit
 		this.fileUpload(this.state.file).then(response => {
 		  this.setState({ wallpaper: response.data });
 		});
 	  };
 	  onChange (e){
+		console.log("yooo",e.target)
 		this.setState({ file: e.target.files[0] });
 	  };
 	  fileUpload(file) {
+		  console.log(file)
 		const url = "http://localhost:3000/upload";
 		const formData = new FormData();
 		formData.append("file", file);
@@ -412,15 +416,7 @@ class App extends React.Component {
 				  onChange={app => this.addMoreApp(app)}
 				/>
 			  </div>
-			  <div className="row">
-				<label for="Store Manager Name">
-				  <b>wallpaper</b>
-				</label>
-				<input className="value" type="file" onChange={this.onChange} />
-				<button onClick={this.onFormSubmit} type="submit">
-				  Upload
-				</button>
-			  </div>
+			  <Main/>
 			  <div className="row">
 				<input className="btnClass" type="submit" value="Submit" />
 			  </div>
