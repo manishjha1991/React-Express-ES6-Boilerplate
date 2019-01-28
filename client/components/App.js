@@ -293,9 +293,8 @@ class App extends React.Component {
 
     const data = new FormData();
     data.append("file", this.uploadInput.files[0]);
-    data.append("filename", this.fileName.value);
-
-    fetch("http://localhost:3000/upload", {
+   
+ fetch("http://localhost:3000/upload", {
       method: "POST",
       body: data
     }).then(response => {
@@ -402,11 +401,14 @@ class App extends React.Component {
               onChange={app => this.addMoreApp(app)}
             />
           </div>
-          <div className="row">
-		  <label className="label" for="Store Manager Name">
-              <b>Upload Walpaper</b>
+         
+            
+          <form  className="row" onSubmit={this.handleUploadImage}>
+          <label className="label" for="Store Manager Name">
+              <div>
+              <b>Upload Wallpaper</b>
+              </div>
             </label>
-            <form onSubmit={this.handleUploadImage}>
               <div>
                 <input
                   ref={ref => {
@@ -415,22 +417,18 @@ class App extends React.Component {
                   type="file"
                 />
               </div>
-              <div>
-                <input
-                  ref={ref => {
-                    this.fileName = ref;
-                  }}
-                  type="text"
-                  placeholder="Enter the desired name of file"
-                />
-              </div>
               <br />
+              <label className="label" for="Store Manager Name">
               <div>
                 <button>Upload</button>
               </div>
-              <img src={this.state.wallpaper} alt="img" />
+            </label>
+              
+              <img src={this.state.wallpaper}  />
             </form>
-          </div>
+            
+          
+          
           <div className="row">
             <input className="btnClass" type="submit" value="Submit" />
           </div>

@@ -75,3 +75,8 @@
 }
 
 
+img{
+  border-style: none;
+  border: 0;
+  max-width: 20%;
+}

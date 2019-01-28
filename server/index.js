@@ -32,15 +32,14 @@ app.use(cors());
 app.use(busboy());
 app.use('/public', express.static(__dirname + '/public'));
 app.post('/upload', (req, res, next) => {
-	console.log(req);
 	let imageFile = req.files.file;
-  
-	imageFile.mv(`${__dirname}/public/${req.body.filename}.jpg`, function(err) {
+  let filename =req.files.file.name;
+	imageFile.mv(`${__dirname}/public/${filename}.jpg`, function(err) {
 	  if (err) {
 		return res.status(500).send(err);
 	  }
   
-	  res.json({file: `public/${req.body.filename}.jpg`});
+	  res.json({file: `public/${filename}.jpg`});
 	});
   
   })
