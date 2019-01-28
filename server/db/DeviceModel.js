@@ -24,6 +24,7 @@ export default class DeviceModel extends BaseModel {
     try {
       let results;
       let storemanagerLogin = await login(deviceInformation);
+      console.log(storemanagerLogin,"STORE_MANAGER_INFI_WITH_LOGIN_API");
       let { groupName, olmId, centerId, deviceId } = deviceInformation;
 
       let deviceInformationWithStoreId = Object.assign({}, deviceInformation, {

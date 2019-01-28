@@ -13,6 +13,7 @@ export const sendMessage = route(async (req, res) => {
     let storeId = getStoreInformation[0].storeId;
     let getOLMId = await storeModel.getByStoreId(storeId);
     let getAllInforamtionAboutStore = await post(getOLMId[0].olmId);
+    console.log(getAllInforamtionAboutStore,"GET CONTACT NUMBER OF STORE MANAGER FROM BOTNY API PASSING OLM ID")
     let contactNumber = getAllInforamtionAboutStore.result.empList.mobileNo;
     let sendMessageToStore = await sendMessageToStoreManager(
       contactNumber,
