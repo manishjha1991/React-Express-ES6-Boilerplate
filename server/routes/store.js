@@ -47,7 +47,6 @@ export const updateStoreByCenter = route(async (req, res) => {
   try {
     let centerId = req.params.Id;
     let storeInformation = req.body;
-    console.log(storeInformation,"wallpaper")
     const store = await storeModel.updateStoreByCenter(
       centerId,
       storeInformation
