@@ -13,31 +13,22 @@ import { verify as verifyMiddleware } from "./routes/sessions";
 // * FILE UPLOAD MULTER END *
 // *******************
 
-import {
-  get as groupRoutes
-  // getByCircleName as getByCircleNameRoutes
-} from "./routes/group";
+import { get as groupRoutes } from "./routes/group";
 
 import { sendMessage as sendMessageRoutes } from "./routes/message";
 
 import {
   create as createCenterRoutes,
   get as getCenterRoutes,
-  put as updateCenterRoutes,
   getById as getByIdCenterRoutes
 } from "./routes/center";
 
 import {
-  create as createCircleRoutes,
   get as getCircleRoutes,
-  put as updateCircleRoutes,
-  getById as getByIdCircleRoutes,
   getCircleByCenterId as getCircleByCenterIdRoutes
 } from "./routes/circle";
 
 import {
-  create as createStoreRoutes,
-  get as getStoreRoutes,
   put as updateStoreByStoreIdRoutes,
   getById as getStoreByCircleIdSRoutes,
   getByStoreId as getStoreByStoreIdRoutes,
@@ -106,22 +97,17 @@ export default function createRouter() {
   router.post("/center", createCenterRoutes);
   router.get("/center/:Id", getByIdCenterRoutes);
   router.get("/center", getCenterRoutes);
-  // router.put("/center/:Id", updateCenterRoutes);
 
   // Circle Routes
 
-  // router.post("/circle", createCircleRoutes);
-  // router.get("/circle/:Id", getByIdCircleRoutes);
   router.get("/circle", getCircleRoutes);
-  // router.put("/circle/:Id", updateCircleRoutes);
+
   router.get("/circle/:Id/center", getCircleByCenterIdRoutes);
-  //Update Circle
 
   // Store Routes
 
-  // router.post("/store", createStoreRoutes);
   router.get("/store/:Id/circle", getStoreByCircleIdSRoutes);
-  // router.get("/store", getStoreRoutes);
+
   router.get("/store/:Id", getStoreByStoreIdRoutes);
   //>>>>>>> Update Routes//
   // NOTE ->
@@ -136,8 +122,6 @@ export default function createRouter() {
    * the following circle.
    */
 
- 
-
   //Device Routes
 
   router.post("/device", createDeviceRoutes);
@@ -148,7 +132,6 @@ export default function createRouter() {
   // Group Routes
 
   router.get("/group", groupRoutes);
-  // router.get("/group/:name", getByCircleNameRoutes);
 
   //App Routes
   router.post("/app", createAppRoutes);
@@ -180,7 +163,7 @@ export default function createRouter() {
     // Log it for debugging purposes later.
 
     res.status(500).send({
-      message:err
+      message: err
     }); // uncaught exception
   });
 

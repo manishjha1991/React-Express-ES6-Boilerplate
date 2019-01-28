@@ -2,27 +2,6 @@ import { route } from ".";
 import StoreModel from "../db/StoreModel";
 import { ApplicationError } from "../lib/errors";
 
-export const create = route(async (req, res) => {
-  const storeModel = new StoreModel();
-  try {
-    const storeInformation = req.body;
-
-    const store = await storeModel.create(storeInformation);
-
-    res.send({ results: store });
-  } catch (error) {
-    throw new ApplicationError(error, 500, {});
-  }
-});
-export const get = route(async (req, res) => {
-  const storeModel = new StoreModel();
-  try {
-    const stores = await storeModel.get();
-    res.send({ results: stores });
-  } catch (error) {
-    throw new ApplicationError(error, 500, {});
-  }
-});
 
 export const getById = route(async (req, res) => {
   const storeModel = new StoreModel();

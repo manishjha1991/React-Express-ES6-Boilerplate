@@ -33,14 +33,4 @@ export const getById = route(async (req, res) => {
     throw new ApplicationError(error, 500, {});
   }
 });
-export const put = route(async (req, res) => {
-  const centerModel = new CenterModel();
-  try {
-    let centerId = req.params.Id;
-    let centerInformation = req.body;
-    const center = await centerModel.put(centerId, centerInformation);
-    res.send({ results: center });
-  } catch (error) {
-    throw new ApplicationError(error, 500, {});
-  }
-});
+

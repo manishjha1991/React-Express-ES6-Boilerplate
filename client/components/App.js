@@ -419,9 +419,9 @@ class App extends React.Component {
               </div>
               <br />
               <label className="label" for="Store Manager Name">
-              <div>
-                <button>Upload</button>
-              </div>
+           <div className="row">
+            <input className="btnClass" type="submit" value="Submit" />
+          </div>
             </label>
               
               <img src={this.state.wallpaper}  />
@@ -429,9 +429,7 @@ class App extends React.Component {
             
           
           
-          <div className="row">
-            <input className="btnClass" type="submit" value="Submit" />
-          </div>
+         
         </form>
       </div>
     );
