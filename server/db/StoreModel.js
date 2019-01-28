@@ -59,6 +59,7 @@ export default class StoreModel extends BaseModel {
   }
   async put(storeId, storeInformation) {
     try {
+      console.log("storeInformation",storeInformation)
       let selectedApps = [];
       await this.model.updateMany(
         { storeId: storeId },

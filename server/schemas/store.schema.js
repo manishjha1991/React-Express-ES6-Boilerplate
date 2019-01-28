@@ -13,11 +13,7 @@ const Store = new mongoose.Schema(
       videoLink: String,
       isActive: { type: Boolean, default: true }
     },
-    wallpaper: {
-      appId: { type: String, default: uuid.v1 },
-      imageLink: String,
-      isActive: { type: Boolean, default: true }
-    },
+    wallpaper : { type: String, default: null },
     selectedApps: {
       type: Array,
       default: []

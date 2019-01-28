@@ -30,7 +30,7 @@ export const put = route(async (req, res) => {
   try {
     let storeId = req.params.Id;
     let storeInformation = req.body;
-
+    
     const store = await storeModel.put(storeId, storeInformation);
     res.send({ results: store });
   } catch (error) {
@@ -47,6 +47,7 @@ export const updateStoreByCenter = route(async (req, res) => {
   try {
     let centerId = req.params.Id;
     let storeInformation = req.body;
+    console.log(storeInformation,"wallpaper")
     const store = await storeModel.updateStoreByCenter(
       centerId,
       storeInformation

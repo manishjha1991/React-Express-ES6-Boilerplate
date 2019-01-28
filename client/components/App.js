@@ -49,7 +49,9 @@ class App extends React.Component {
     this.handleGroupChange = this.handleGroupChange.bind(this);
     this.handleGroupChange = this.handleGroupChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUploadImage = this.handleUploadImage.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.fileUpload = this.fileUpload.bind(this);
   }
   componentDidMount() {
     fetch("http://localhost:3000/center")
@@ -127,17 +129,13 @@ class App extends React.Component {
     ) {
       this.setState({ errorMsg: "Please Select group and app first" });
     }
-    console.log(this.state.isCenterSelected, "IS_CENTER_SELECTED");
-    console.log(this.state.isCircleSelected, "IS_CENTER_SELECTED");
-    console.log(this.state.isStoreSelected, "IS_STORE_SELECTED");
-    console.log(this.state.selectedApps, "SELECTED_APP");
     let data = {
-      wallpaper: {
-        imageLink: this.state.wallpaper
-      },
+      wallpaper: this.state.wallpaper,
+
       groupName: this.state.GroupName.label,
       selectedApps: []
     };
+    console.log(data, "DATA");
     this.state.selectedApps.forEach(app => {
       data.selectedApps.push({
         appId: app.value,
@@ -196,6 +194,7 @@ class App extends React.Component {
       !this.state.isCircleSelected &&
       !this.state.isCenterSelected
     ) {
+      console.log(data);
       console.log("CENTER AND CIRCLE AND STORE");
       fetch(`http://localhost:3000/store/${this.state.store.value}`, {
         method: "PUT",
@@ -212,7 +211,7 @@ class App extends React.Component {
         })
         .catch(error => alert(error));
     }
-}
+  }
   showSuccess() {
     this.setState({
       successFlag: true,
@@ -250,7 +249,8 @@ class App extends React.Component {
             GroupName: {
               label: result.results[0].groupName,
               value: result.results[0].groupName
-            }
+            },
+            wallpaper: result.results[0].wallpaper
           });
         },
         error => {
@@ -284,24 +284,27 @@ class App extends React.Component {
         }
       );
   }
-
+  onFormSubmit(e) {
+    e.preventDefault(); // Stop form submit
+    this.fileUpload(this.state.file).then(response => {
+      this.setState({
+        wallpaper: `http://localhost:3000/${response.data.file}`
+      });
+    });
+  }
   onChange(e) {
     this.setState({ file: e.target.files[0] });
   }
-  handleUploadImage(ev) {
-    ev.preventDefault();
-
-    const data = new FormData();
-    data.append("file", this.uploadInput.files[0]);
-   
- fetch("http://localhost:3000/upload", {
-      method: "POST",
-      body: data
-    }).then(response => {
-      response.json().then(body => {
-        this.setState({ wallpaper: `http://localhost:3000/${body.file}` });
-      });
-    });
+  fileUpload(file) {
+    const url = "http://localhost:3000/upload";
+    const formData = new FormData();
+    formData.append("file", file);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data"
+      }
+    };
+    return post(url, formData, config);
   }
   addMoreApp(app) {
     this.setState({ errorMsg: "" });
@@ -401,35 +404,24 @@ class App extends React.Component {
               onChange={app => this.addMoreApp(app)}
             />
           </div>
-         
-            
-          <form  className="row" onSubmit={this.handleUploadImage}>
-          <label className="label" for="Store Manager Name">
-              <div>
-              <b>Upload Wallpaper</b>
-              </div>
+          <div className="row">
+            <label className="upload" for="Store Manager Name">
+              <b>Selected Wallpaper</b>
             </label>
-              <div>
-                <input
-                  ref={ref => {
-                    this.uploadInput = ref;
-                  }}
-                  type="file"
-                />
-              </div>
-              <br />
-              <label className="label" for="Store Manager Name">
-           <div className="row">
+            <img src={this.state.wallpaper} />
+          </div>
+          <div className="row">
+            <label for="Store Manager Name">
+              <b>wallpaper</b>
+            </label>
+            <input className="value" type="file" onChange={this.onChange} />
+            <button onClick={this.onFormSubmit} type="submit">
+              Upload
+            </button>
+          </div>
+          <div className="row">
             <input className="btnClass" type="submit" value="Submit" />
           </div>
-            </label>
-              
-              <img src={this.state.wallpaper}  />
-            </form>
-            
-          
-          
-         
         </form>
       </div>
     );
