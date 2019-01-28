@@ -4,7 +4,6 @@ import "style.css";
 import "../css/Device.css";
 import axios, { post } from "axios";
 import HeaderComponent from "./HeaderComponent";
-import Main from "./FileUpload";
 import { uniqBy } from "lodash";
 
 class App extends React.Component {
@@ -154,7 +153,6 @@ class App extends React.Component {
       !this.state.isCircleSelected &&
       !this.state.isStoreSelected
     ) {
-      alert("ONLY_CENTER");
       fetch(`http://localhost:3000/store/${this.state.center.value}/center`, {
         method: "PUT",
         headers: {
@@ -214,26 +212,7 @@ class App extends React.Component {
         })
         .catch(error => alert(error));
     }
-
-    // if (data.wallpaper.imageLink) {
-    //   fetch(`http://localhost:3000/device/${this.state.device.value}`, {
-    //     method: "PUT",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json"
-    //     },
-    //     mode: "cors",
-    //     body: JSON.stringify(data)
-    //   })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       this.showSuccess();
-    //     })
-    //     .catch(error => alert(error));
-    // } else {
-    //   console.log("upload is not succeed");
-    // }
-  }
+}
   showSuccess() {
     this.setState({
       successFlag: true,
@@ -306,30 +285,9 @@ class App extends React.Component {
       );
   }
 
-  onFormSubmit(e) {
-    console.log("yooo", this.state.file);
-    e.preventDefault(); // Stop form submit
-    this.fileUpload(this.state.file).then(response => {
-      this.setState({ wallpaper: response.data });
-    });
-  }
   onChange(e) {
-    console.log("yooo", e.target);
     this.setState({ file: e.target.files[0] });
   }
-  fileUpload(file) {
-    console.log(file);
-    const url = "http://localhost:3000/upload";
-    const formData = new FormData();
-    formData.append("file", file);
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data"
-      }
-    };
-    return post(url, formData, config);
-  }
-
   handleUploadImage(ev) {
     ev.preventDefault();
 
@@ -354,7 +312,6 @@ class App extends React.Component {
     this.setState({ selectedApps });
   }
   render() {
-    console.log(this.state, "SELECTED_APP");
     return (
       <div>
         <HeaderComponent />
