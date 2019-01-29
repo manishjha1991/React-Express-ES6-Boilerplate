@@ -63,7 +63,7 @@ export default class DeviceModel extends BaseModel {
         await this.circleModel.create(insertedInformationForCircle);
         let getAppIds = await this.appModel.find(
           { groupName: groupName },
-          { _id: 0, appId: 1, appName: 1, appLink: 1 }
+          { _id: 0, appId: 1, appName: 1, appLink: 1 ,isPlayStore:1}
         );
         let getBrowserIds = await this.browserModel.find(
           { browserGroupName: groupName },
