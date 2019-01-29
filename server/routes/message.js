@@ -8,12 +8,13 @@ export const sendMessage = route(async (req, res) => {
   const storeModel = new StoreModel();
   try {
     let { deviceId } = req.body;
-    let Message = `Please Recharge Your Battery of ${deviceId}`;
     const getStoreInformation = await deviceModel.getById(deviceId);
     let storeId = getStoreInformation[0].storeId;
     let getOLMId = await storeModel.getByStoreId(storeId);
     let getAllInforamtionAboutStore = await post(getOLMId[0].olmId);
     console.log(getAllInforamtionAboutStore,"GET CONTACT NUMBER OF STORE MANAGER FROM BOTNY API PASSING OLM ID")
+    let Message = `Battery of your device ${deviceId}  at store ${getOLMId[0].storeId} has gone below 15%. Please take action accordingly`;
+    console.log(Message,"MESSAGE")
     let contactNumber = getAllInforamtionAboutStore.result.empList.mobileNo;
     let sendMessageToStore = await sendMessageToStoreManager(
       contactNumber,

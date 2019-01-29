@@ -2,7 +2,7 @@ import request from "request";
 export async function post(olmid) {
   var options = {
     method: "POST",
-    url: "http://10.5.194.81/email2sms-web/getuserpersonaldetails",
+    url: "http://10.5.194.81:8080/email2sms-web/getuserpersonaldetails",
     headers: {
       "cache-control": "no-cache",
       "Content-Type": "application/json"
@@ -13,8 +13,10 @@ export async function post(olmid) {
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
       if (error) {
+        console.log(error,"ERRRO FROM GET_USER_PERSONAL_DETAILS")
         reject(error);
       } else {
+        console.log(response,"RESPONSE FROM GET_USER_PERSONAL_DETAILS")
         resolve(body);
       }
     });
