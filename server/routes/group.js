@@ -1,11 +1,12 @@
 import { route } from ".";
 import GroupModel from "../db/GroupModel";
 import { ApplicationError } from "../lib/errors";
+import { success } from "../lib/buildResponse";
 export const get = route(async (req, res) => {
   const groupModel = new GroupModel();
   try {
     const group = await groupModel.get();
-    res.send({ results: group });
+    res.send(success(group));
   } catch (error) {
     throw new ApplicationError(error, 500, {});
   }
