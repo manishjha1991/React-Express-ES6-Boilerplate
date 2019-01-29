@@ -13,10 +13,12 @@ const Device = new mongoose.Schema(
       type: Boolean,
       default: true
     },
-
+    checkNetWorkStatus:{type :Date,default:null},
     createdAt: { type: Date, default: null },
     updatedAt: { type: Date, default: null }
+    
   },
+
   {
     timestamps: true,
     toObject: { virtuals: true },

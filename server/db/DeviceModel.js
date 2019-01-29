@@ -154,7 +154,18 @@ export default class DeviceModel extends BaseModel {
         { new: true }
       );
     } catch (error) {
-      throw new ApplicationError(error, 500, {});
+      throw error
+    }
+  }
+  async updateNetWorkStatusForDeviceByDeviceId(deviceId,requestTime){
+    try{
+      return await this.model.findOneAndUpdate(
+        { deviceId: deviceId },
+        { $set: { checkNetWorkStatus: requestTime } },
+        { new: true }
+      );
+    }catch(error){
+      throw error
     }
   }
 }

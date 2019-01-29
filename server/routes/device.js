@@ -55,3 +55,14 @@ export const getAllStore = route(async (req, res) => {
     throw new ApplicationError(error, 500, {});
   }
 });
+export const updateNetWorkStatusForDeviceByDeviceId = route(async (req, res,next) => {
+  const deviceModel = new DeviceModel();
+  try {
+    let deviceId = req.params.Id;
+    req.start = Date.now();
+    const updatedNetworkStatus = await deviceModel.updateNetWorkStatusForDeviceByDeviceId(deviceId,req.start);
+    res.send({ results: updatedNetworkStatus });
+  } catch (error) {
+    throw new ApplicationError(error, 500, {});
+  }
+});

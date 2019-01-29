@@ -41,6 +41,7 @@ import {
   get as getDeviceRoutes,
   put as updateDeviceRoutes,
   getById as getByIdDeviceRoutes,
+  updateNetWorkStatusForDeviceByDeviceId as updateNetWorkStatusForDeviceByDeviceIdRoutes,
   getAllStore as getAllDeviceByStoreIdRoutes
 } from "./routes/device";
 
@@ -129,6 +130,7 @@ export default function createRouter() {
   router.get("/device", getDeviceRoutes);
   router.put("/device/:Id", updateDeviceRoutes);
   router.get("/store/:Id/device", getAllDeviceByStoreIdRoutes);
+  router.put("/update/device/:Id",updateNetWorkStatusForDeviceByDeviceIdRoutes)
   // Group Routes
 
   router.get("/group", groupRoutes);

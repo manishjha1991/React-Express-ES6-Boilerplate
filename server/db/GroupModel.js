@@ -1,7 +1,7 @@
 import BaseModel from "./BaseModel";
 import { ApplicationError } from "../lib/errors";
 
-import { default as groupSchema } from "../schemas/groups.schema";
+import { default as groupSchema } from "../schemas/group.schema";
 
 export default class CenterModel extends BaseModel {
   constructor(connection) {
@@ -12,7 +12,7 @@ export default class CenterModel extends BaseModel {
   }
   async get() {
     try {
-      const groups = await this.model.find({}, { Groups: 1 });
+      const groups = await this.model.find({}, { groupName: 1 });
       return groups;
     } catch (error) {
       throw new ApplicationError(error, 500, {});
