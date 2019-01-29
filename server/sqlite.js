@@ -3,9 +3,9 @@ var fs = require("fs");
 const sqlite3 = require("sqlite3").verbose();
 export async function sqlData(deviceInformation) {
   const dbPath = path.resolve(
-    __dirname,
-    `./sqliteDbs/${deviceInformation.deviceId}.db`
+    `${__dirname}/public/${deviceInformation.deviceId}.db`
   );
+  let response= `http://localhost:8086/public/${deviceInformation.deviceId}.db`
   let db = new sqlite3.Database(
     dbPath,
     sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
@@ -38,5 +38,5 @@ export async function sqlData(deviceInformation) {
     }
     console.log("Close the database connection.");
   });
-  return dbPath;
+  return response;
 }
