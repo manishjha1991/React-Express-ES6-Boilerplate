@@ -18,6 +18,10 @@ const Store = new mongoose.Schema(
       type: Array,
       default: []
     },
+    blockedApps: {
+      type: Array,
+      default: ["YouTube","Maps","Gmail","Calendar"]
+    },
     selectedBrowser: {
       type: Array,
       default: []
