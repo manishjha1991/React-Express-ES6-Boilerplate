@@ -5,7 +5,7 @@ export async function sqlData(deviceInformation) {
   const dbPath = path.resolve(
     `${__dirname}/public/${deviceInformation.deviceId}.db`
   );
-  let response= `http://localhost:8086/public/${deviceInformation.deviceId}.db`
+  let response= `http://http://125.16.74.160:30630/public/${deviceInformation.deviceId}.db`
   let db = new sqlite3.Database(
     dbPath,
     sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE,
