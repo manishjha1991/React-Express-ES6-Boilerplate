@@ -54,7 +54,7 @@ class App extends React.Component {
     this.fileUpload = this.fileUpload.bind(this);
   }
   componentDidMount() {
-    fetch("http://localhost:3000/center")
+    fetch("http://localhost:8086/center")
       .then(res => res.json())
       .then(
         result => {
@@ -68,7 +68,7 @@ class App extends React.Component {
           });
         }
       );
-    fetch("http://localhost:3000/app")
+    fetch("http://localhost:8086/app")
       .then(res => res.json())
       .then(
         result => {
@@ -87,7 +87,7 @@ class App extends React.Component {
   handleCenterChange(center) {
     this.setState({ center });
     this.setState({ isCenterSelected: true });
-    fetch(`http://localhost:3000/circle/${center.value}/center`)
+    fetch(`http://localhost:8086/circle/${center.value}/center`)
       .then(res => res.json())
       .then(
         result => {
@@ -105,7 +105,7 @@ class App extends React.Component {
   handleCircleChange(circle) {
     this.setState({ circle });
     this.setState({ isCircleSelected: true });
-    fetch(`http://localhost:3000/store/${circle.value}/circle`)
+    fetch(`http://localhost:8086/store/${circle.value}/circle`)
       .then(res => res.json())
       .then(
         result => {
@@ -140,7 +140,8 @@ class App extends React.Component {
       data.selectedApps.push({
         appId: app.value,
         appName: app.label,
-        appLink: app.appLink
+        appLink: app.appLink,
+        isPlayStore:app.isPlayStore
       });
     });
 
@@ -151,7 +152,7 @@ class App extends React.Component {
       !this.state.isCircleSelected &&
       !this.state.isStoreSelected
     ) {
-      fetch(`http://localhost:3000/store/${this.state.center.value}/center`, {
+      fetch(`http://localhost:8086/store/${this.state.center.value}/center`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -171,7 +172,7 @@ class App extends React.Component {
 
     if (this.state.isCircleSelected && !this.state.storeId) {
       console.log("CENTER AND CIRCLE");
-      fetch(`http://localhost:3000/store/${this.state.circle.value}/circle`, {
+      fetch(`http://localhost:8086/store/${this.state.circle.value}/circle`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -196,7 +197,7 @@ class App extends React.Component {
     ) {
       console.log(data);
       console.log("CENTER AND CIRCLE AND STORE");
-      fetch(`http://localhost:3000/store/${this.state.store.value}`, {
+      fetch(`http://localhost:8086/store/${this.state.store.value}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -230,7 +231,7 @@ class App extends React.Component {
       isCenterSelected: false,
       isCircleSelected: false
     });
-    fetch(`http://localhost:3000/store/${store.value}`)
+    fetch(`http://localhost:8086/store/${store.value}`)
       .then(res => res.json())
       .then(
         result => {
@@ -243,7 +244,8 @@ class App extends React.Component {
               return {
                 label: app.appName,
                 value: app.appId,
-                appLink: app.appLink
+                appLink: app.appLink,
+                isPlayStore:app.isPlayStore
               };
             }),
             GroupName: {
@@ -263,7 +265,7 @@ class App extends React.Component {
   handleGroupChange(GroupName) {
     this.setState({ errorMsg: "" });
     this.setState({ GroupName });
-    fetch(`http://localhost:3000/app/${GroupName.value}`)
+    fetch(`http://localhost:8086/app/${GroupName.value}`)
       .then(res => res.json())
       .then(
         result => {
@@ -272,7 +274,8 @@ class App extends React.Component {
               return {
                 label: app.appName,
                 value: app.appId,
-                appLink: app.appLink
+                appLink: app.appLink,
+                isPlayStore:app.isPlayStore
               };
             })
           });
@@ -288,7 +291,7 @@ class App extends React.Component {
     e.preventDefault(); // Stop form submit
     this.fileUpload(this.state.file).then(response => {
       this.setState({
-        wallpaper: `http://localhost:3000/${response.data.file}`
+        wallpaper: `http://localhost:8086/${response.data.file}`
       });
     });
   }
@@ -296,7 +299,7 @@ class App extends React.Component {
     this.setState({ file: e.target.files[0] });
   }
   fileUpload(file) {
-    const url = "http://localhost:3000/upload";
+    const url = "http://localhost:8086/upload";
     const formData = new FormData();
     formData.append("file", file);
     const config = {
