@@ -5,7 +5,9 @@ import "../css/Device.css";
 import axios, { post } from "axios";
 import HeaderComponent from "./HeaderComponent";
 import { uniqBy } from "lodash";
-
+// FOR DEVELOPEMENT
+let apiUrl = "http://localhost:8086"
+// let apiUrl = "http://125.16.74.160:30630"
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +56,7 @@ class App extends React.Component {
     this.fileUpload = this.fileUpload.bind(this);
   }
   componentDidMount() {
-    fetch("http://localhost:8086/center")
+    fetch(`${apiUrl}/center`)
       .then(res => res.json())
       .then(
         result => {
@@ -68,7 +70,7 @@ class App extends React.Component {
           });
         }
       );
-    fetch("http://localhost:8086/app")
+    fetch(`${apiUrl}/app`)
       .then(res => res.json())
       .then(
         result => {
@@ -87,7 +89,7 @@ class App extends React.Component {
   handleCenterChange(center) {
     this.setState({ center });
     this.setState({ isCenterSelected: true });
-    fetch(`http://localhost:8086/circle/${center.value}/center`)
+    fetch(`${apiUrl}/circle/${center.value}/center`)
       .then(res => res.json())
       .then(
         result => {
@@ -105,7 +107,7 @@ class App extends React.Component {
   handleCircleChange(circle) {
     this.setState({ circle });
     this.setState({ isCircleSelected: true });
-    fetch(`http://localhost:8086/store/${circle.value}/circle`)
+    fetch(`${apiUrl}/store/${circle.value}/circle`)
       .then(res => res.json())
       .then(
         result => {
@@ -152,7 +154,7 @@ class App extends React.Component {
       !this.state.isCircleSelected &&
       !this.state.isStoreSelected
     ) {
-      fetch(`http://localhost:8086/store/${this.state.center.value}/center`, {
+      fetch(`${apiUrl}/store/${this.state.center.value}/center`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -172,7 +174,7 @@ class App extends React.Component {
 
     if (this.state.isCircleSelected && !this.state.storeId) {
       console.log("CENTER AND CIRCLE");
-      fetch(`http://localhost:8086/store/${this.state.circle.value}/circle`, {
+      fetch(`${apiUrl}/store/${this.state.circle.value}/circle`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -197,7 +199,7 @@ class App extends React.Component {
     ) {
       console.log(data);
       console.log("CENTER AND CIRCLE AND STORE");
-      fetch(`http://localhost:8086/store/${this.state.store.value}`, {
+      fetch(`${apiUrl}/store/${this.state.store.value}`, {
         method: "PUT",
         headers: {
           Accept: "application/json",
@@ -231,7 +233,7 @@ class App extends React.Component {
       isCenterSelected: false,
       isCircleSelected: false
     });
-    fetch(`http://localhost:8086/store/${store.value}`)
+    fetch(`${apiUrl}/store/${store.value}`)
       .then(res => res.json())
       .then(
         result => {
@@ -265,7 +267,7 @@ class App extends React.Component {
   handleGroupChange(GroupName) {
     this.setState({ errorMsg: "" });
     this.setState({ GroupName });
-    fetch(`http://localhost:8086/app/${GroupName.value}`)
+    fetch(`${apiUrl}/app/${GroupName.value}`)
       .then(res => res.json())
       .then(
         result => {
@@ -291,7 +293,7 @@ class App extends React.Component {
     e.preventDefault(); // Stop form submit
     this.fileUpload(this.state.file).then(response => {
       this.setState({
-        wallpaper: `http://localhost:8086/${response.data.file}`
+        wallpaper: `${apiUrl}/${response.data.file}`
       });
     });
   }
@@ -299,7 +301,7 @@ class App extends React.Component {
     this.setState({ file: e.target.files[0] });
   }
   fileUpload(file) {
-    const url = "http://localhost:8086/upload";
+    const url = `${apiUrl}/upload`;
     const formData = new FormData();
     formData.append("file", file);
     const config = {

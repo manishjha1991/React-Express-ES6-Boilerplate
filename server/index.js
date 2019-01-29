@@ -4,14 +4,13 @@ import cors from "cors";
 import forceSsl from "express-force-ssl";
 import http from "http";
 import fs from "fs";
-import busboy from "connect-busboy";
 import { getEnv } from "./lib/env";
 import createRouter from "./router";
 import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from '../webpack.config.dev';
-const fileUpload = require('express-fileupload');
+import fileUpload from 'express-fileupload';
 let app = express();
 
 const compiler = webpack(webpackConfig)
@@ -26,10 +25,7 @@ app.use(fileUpload());
 app.get('/home', (req,res) => {
 	res.sendFile(path.join(__dirname,'./index.html'));
 });
-
-
 app.use(cors());
-app.use(busboy());
 app.use('/public', express.static(__dirname + '/public'));
 app.post('/upload', (req, res, next) => {
 	let imageFile = req.files.file;
