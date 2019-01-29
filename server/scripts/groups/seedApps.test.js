@@ -32,7 +32,7 @@ beforeEach(async () => {
     console.log("err1", err);
     parse(fileData, { trim: true }, (err, rows) => {
       console.log("err12", err);
-      let appId, appName, groupId, groupName, appLink;
+      let appId, appName, groupId, groupName, appLink,isPlayStore;
       _.each(rows, async row => {
         if (row[1].indexOf("||") > -1) {
           groupName = row[1].split("||")[0];
@@ -41,6 +41,7 @@ beforeEach(async () => {
         appId = row[0];
         appName = row[1];
         appLink = row[2];
+        isPlayStore=row[3];
         if (appId !== "") {
           appId = Number.parseInt(appId);
           let insertingInformation = {
@@ -49,6 +50,7 @@ beforeEach(async () => {
             groupId: groupId,
             groupName: groupName.trim(),
             appLink: appLink,
+            isPlayStore:isPlayStore,
             isActive: true
           };
           await appModel.findOneAndUpdate(

@@ -7,6 +7,7 @@ const App = new mongoose.Schema(
     groupId: { type: Number, default: null },
     appLink: { type: String, default: null },
     groupName: { type: String, default: null },
+    isPlayStore:{ type: Boolean, default: true },
     isActive: {
       type: Boolean,
       default: true
