@@ -1,13 +1,9 @@
 import mongoose from "mongoose";
-import Store from "../../schemas/store.schema";
-import Circle from "../../schemas/circle.schema";
+import Center from "../../../schemas/center.schema";
 import fs from "fs";
 import path from "path";
 import parse from "csv-parse";
 import _ from "lodash";
-import { configurationFile } from "../../lib/config";
-
-
 const options = {
   autoIndex: false, // Don't build indexes
   reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
@@ -22,7 +18,7 @@ const options = {
 
 beforeEach(async () => {
   let connection = await mongoose.connect(
-    configurationFile[process.env["NODE_ENV"]].mongoUrl,
+    "mongodb://localhost:27017/db_mdm_app",
   options,
     async err => {
       if (err) {
@@ -30,20 +26,32 @@ beforeEach(async () => {
       }
     }
   );
-  const jsonPath = path.join(__dirname, "stores.csv");
- const storeModel = await connection.model("Store", Store);
- const circleModel = await connection.model("Circle", Circle);
+  const jsonPath = path.join(__dirname, "centers.csv");
+  const centerModel = await connection.model("Center", Center);
 fs.readFile(jsonPath, (err, fileData) => {
-
  parse(fileData, { trim: true }, (err, rows) => {
-    console.log(err) 
-  let circleName;
+  let centerId,centerName;
    _.each(rows, async row => {
-    if (row[0] == "") {
-        circleName = row[1];
-      }
-       await circleModel.find({circleName:circleName},{circleId:1})
- });
+     if (row[0] && row[1]) {
+      centerId=row[0]
+      centerName=row[1]
+     }
+    if (row[0] !== "") {
+      centerId = Number.parseInt(row[0]);
+    let insertingInformation = {
+         centerId: centerId,
+         centerName: centerName,
+         isActive: true,
+       };
+       await centerModel.findOneAndUpdate(
+        {
+          centerId
+        },
+        insertingInformation,
+        { upsert: true }
+      );
+     }
+   });
  });
 });
 });

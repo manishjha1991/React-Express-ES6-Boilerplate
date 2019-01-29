@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import Circle from "../../schemas/circle.schema";
+import App from "../../../schemas/app.schema";
 import fs from "fs";
 import path from "path";
 import parse from "csv-parse";
 import _ from "lodash";
-import { configurationFile } from "../../lib/config";
+
 
 const options = {
   autoIndex: false, // Don't build indexes
@@ -18,7 +18,7 @@ const options = {
 
 beforeEach(async () => {
   let connection = await mongoose.connect(
-    "mongodb://localhost:27017/db_mdm_backend",
+    "mongodb://localhost:27017/db_mdm_app",
     options,
     async err => {
       if (err) {
@@ -26,33 +26,36 @@ beforeEach(async () => {
       }
     }
   );
-  const jsonPath = path.join(__dirname, "circles.csv");
-  const circleModel = await connection.model("Circle", Circle);
+  const jsonPath = path.join(__dirname, "app.csv");
+  const appModel = await connection.model("App", App);
   fs.readFile(jsonPath, (err, fileData) => {
     console.log("err1", err);
     parse(fileData, { trim: true }, (err, rows) => {
       console.log("err12", err);
-      let centerId, circleId, circleName;
-      if (rows[0][1].split("||")[1]) {
-        centerId = rows[0][1].split("||")[1];
-      }
+      let appId, appName, groupId, groupName, appLink,isPlayStore;
       _.each(rows, async row => {
         if (row[1].indexOf("||") > -1) {
-          circleId = row[1].split("||")[1];
-          row[1] = row[1].split("||")[0];
+          groupName = row[1].split("||")[0];
+          groupId = row[1].split("||")[1];
         }
-        circleName = row[1];
-        if (row[0] !== "") {
-          circleId = Number.parseInt(row[0]);
+        appId = row[0];
+        appName = row[1];
+        appLink = row[2];
+        isPlayStore=row[3];
+        if (appId !== "") {
+          appId = Number.parseInt(appId);
           let insertingInformation = {
-            circleId: circleId,
-            centerId: centerId,
-            circleName: circleName,
+            appId: appId,
+            appName: appName.trim(),
+            groupId: groupId,
+            groupName: groupName.trim(),
+            appLink: appLink,
+            isPlayStore:isPlayStore,
             isActive: true
           };
-          await circleModel.findOneAndUpdate(
+          await appModel.findOneAndUpdate(
             {
-              circleId
+              appId
             },
             insertingInformation,
             { upsert: true }
