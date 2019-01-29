@@ -1,0 +1,52 @@
+{
+  "name": "rest-api",
+  "version": "1.0.0",
+  "description": "backend for rest api",
+  "author": "Manish Kumar Jha",
+  "license": "MIT",
+  "scripts": {
+    "seed": "NODE_ENV=development jest --testPathIgnorePatterns=src/db/ --runInBand"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "testMatch": [
+      "**/?(*.)(spec|test).js"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "testEnvironment": "node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Manishjha1991/realtime-cricket-score.git"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "bugs": {
+    "url": "https://github.com/Manishjha1991/realtime-cricket-score/issues"
+  },
+  "homepage": "https://github.com/Manishjha1991/realtime-cricket-score/blob/master/README.md",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "csv-parse": "^4.3.0",
+    "lodash": "^4.17.4",
+    "mongoose": "^5.0.0-rc2",
+    "uuid": "^3.1.0",
+    "validator": "^9.2.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.1",
+    "babel-jest": "^21.2.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "jest": "^21.2.1"
+  }
+}
