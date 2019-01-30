@@ -37,7 +37,7 @@ export default class BrowserModel extends BaseModel {
   }
   async getBrowserByGroup(groupId) {
     try {
-      const browser = await this.model.find({ groupId: groupId });
+      const browser = await this.model.find({ browserGroupId: groupId });
       return browser;
     } catch (error) {
       throw new ApplicationError(error, 500, {});

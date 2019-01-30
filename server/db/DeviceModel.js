@@ -159,6 +159,7 @@ export default class DeviceModel extends BaseModel {
   }
   async updateNetWorkStatusForDeviceByDeviceId(deviceId,requestTime){
     try{
+      console.log(new Date(requestTime))
       return await this.model.findOneAndUpdate(
         { deviceId: deviceId },
         { $set: { checkNetWorkStatus: requestTime } },

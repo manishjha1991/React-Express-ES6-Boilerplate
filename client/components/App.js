@@ -39,6 +39,7 @@ class App extends React.Component {
       apps: [],
       app: [],
       selectedApps: [],
+      selectedBrowser:[],
       wallpaper: "",
       isCircleSelected: false,
       isCenterSelected: false,
@@ -135,7 +136,8 @@ class App extends React.Component {
       wallpaper: this.state.wallpaper,
 
       groupName: this.state.GroupName.label,
-      selectedApps: []
+      selectedApps: [],
+      selectedBrowser:[]
     };
     console.log(data, "DATA");
     this.state.selectedApps.forEach(app => {
@@ -250,6 +252,13 @@ class App extends React.Component {
                 isPlayStore:app.isPlayStore
               };
             }),
+            selectedBrowser: result.results[0].selectedBrowser.map(app => {
+              return {
+                label: app.browserName,
+                value: app.browserId,
+                appLink: app.browserLink,
+              };
+            }),
             GroupName: {
               label: result.results[0].groupName,
               value: result.results[0].groupName
@@ -278,6 +287,26 @@ class App extends React.Component {
                 value: app.appId,
                 appLink: app.appLink,
                 isPlayStore:app.isPlayStore
+              };
+            })
+          });
+        },
+        error => {
+          this.setState({
+            error
+          });
+        }
+      );
+      fetch(`${apiUrl}/browser/${GroupName.value}`)
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({
+            selectedBrowser: result.results.map(app => {
+              return {
+                label: app.browserName,
+                value: app.browserId,
+                appLink: app.browserLink
               };
             })
           });
@@ -407,6 +436,20 @@ class App extends React.Component {
                 return { value: app.appId, label: app.appName };
               })}
               onChange={app => this.addMoreApp(app)}
+            />
+          </div>
+          <div className="row">
+            <label className="label" for="Store Manager Name">
+              <b>Select Browser</b>
+            </label>
+            <Select
+              className="value"
+              options={this.state.apps.map(app => {
+                return { label: app.appId, value: app.appName };
+              })}
+              value={this.state.selectedBrowser}
+              onChange={selectedBrowser => this.setState({ selectedBrowser })}
+              isMulti
             />
           </div>
           <div className="row">
