@@ -20,7 +20,7 @@ const Store = new mongoose.Schema(
     },
     blockedApps: {
       type: Array,
-      default: ["YouTube","Maps","Gmail","Calendar"]
+      default: ["com.google.android.youtube","com.android.calendar"]
     },
     selectedBrowser: {
       type: Array,
