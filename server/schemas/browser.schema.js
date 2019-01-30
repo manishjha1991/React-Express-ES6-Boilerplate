@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import uuid from "uuid";
 const Browser = new mongoose.Schema(
   {
+    _id:{ type: String,default: null },
     browserId: { type: String, default: null },
     browserName: { type: String, default: null },
     browserGroupId: { type: Number, default: null },

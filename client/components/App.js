@@ -92,7 +92,7 @@ class App extends React.Component {
       .then(
         result => {
           this.setState({
-            browsers:uniqBy(result.results, "browserName")
+            browsers:uniqBy(result.results, "browserId")
           });
         },
         error => {
@@ -155,8 +155,9 @@ class App extends React.Component {
       selectedApps: [],
       selectedBrowser:[]
     };
-    console.log(data, "DATA");
+    
     this.state.selectedApps.forEach(app => {
+      console.log("APP->>>>>>>>>>",app)
       data.selectedApps.push({
         appId: app.value,
         appName: app.label,
@@ -165,14 +166,14 @@ class App extends React.Component {
       });
     });
     this.state.selectedBrowser.forEach(app => {
-      console.log(app,"APP")
+      
       data.selectedBrowser.push({
         browserName: app.label,
         browserId: app.value,
         browserLink: app.appLink,
       });
     });
-
+  console.log("DATA++++++++++",data,)
     // IF ONLY CENTER SELECTED THAT MEANS NEED TO UPDATE FROM CENTER
 
     if (
@@ -223,7 +224,7 @@ class App extends React.Component {
       !this.state.isCircleSelected &&
       !this.state.isCenterSelected
     ) {
-      console.log(data);
+      
       console.log("CENTER AND CIRCLE AND STORE");
       fetch(`${apiUrl}/store/${this.state.store.value}`, {
         method: "PUT",
@@ -372,7 +373,7 @@ class App extends React.Component {
     this.setState({ selectedApps });
   }
   render() {
-    console.log(this.state.browsers)
+    
     return (
       <div>
         <HeaderComponent />
@@ -458,7 +459,7 @@ class App extends React.Component {
             <Select
               className="value"
               options={this.state.apps.map(app => {
-                return { value: app.appId, label: app.appName };
+                return { value: app.appId, label: app.appName,appLink:app.appLink,isPlayStore:app.isPlayStore };
               })}
               onChange={app => this.addMoreApp(app)}
             />
@@ -470,8 +471,7 @@ class App extends React.Component {
             <Select
               className="value"
               options={this.state.browsers.map(app => {
-                console.log(app,"YOOOOOO_YOOOOO")
-                return { label: app.browserName, value: app.browserGroupId ,appLink:app.browserLink};
+                return { label: app.browserName, value: app.browserId ,appLink:app.browserLink};
               })}
               value={this.state.selectedBrowser}
               onChange={selectedBrowser => this.setState({ selectedBrowser })}

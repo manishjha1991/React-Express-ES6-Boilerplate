@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Browser from "../../../schemas/browser.schema";
 import fs from "fs";
+import uuid from "uuid";
 import path from "path";
 import parse from "csv-parse";
 import _ from "lodash";
@@ -32,7 +33,7 @@ beforeEach(async () => {
     console.log("err1", err);
     parse(fileData, { trim: true }, (err, rows) => {
       console.log("err12", err);
-      let browserId, browserName, browserGroupId, browserGroupName, browserLink;
+      let browserId, browserName, browserGroupId, browserGroupName, browserLink,mdmId;
       _.each(rows, async row => {
         if (row[1].indexOf("||") > -1) {
           browserGroupName = row[1].split("||")[0];
@@ -41,9 +42,11 @@ beforeEach(async () => {
         browserId = row[0];
         browserName = row[1];
         browserLink = row[2];
+        mdmId=row[3];
         if (browserId !== "") {
           browserId = Number.parseInt(browserId);
           let insertingInformation = {
+            _id:mdmId,
             browserId: browserId,
             browserName: browserName.trim(),
             browserGroupId: browserGroupId,
@@ -53,7 +56,7 @@ beforeEach(async () => {
           };
           await browserModel.findOneAndUpdate(
             {
-              browserId
+              _id:mdmId
             },
             insertingInformation,
             { upsert: true }
