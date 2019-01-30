@@ -118,9 +118,8 @@ export default class DeviceModel extends BaseModel {
       const device = await this.model
         .find({
           deviceId: deviceId
-        })
-        .sort({ createdAt: -1 });
-
+        }) .populate("store")
+        .lean();
       return device;
     } catch (error) {
       throw new ApplicationError(error, 500, {});
