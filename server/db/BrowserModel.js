@@ -2,6 +2,7 @@ import BaseModel from "./BaseModel";
 import { ApplicationError } from "../lib/errors";
 
 import { default as browserSchema } from "../schemas/browser.schema";
+import {default as browserGroupSchema} from "../schemas/browserGroup.schema"
 
 export default class BrowserModel extends BaseModel {
   constructor(connection) {
@@ -9,6 +10,7 @@ export default class BrowserModel extends BaseModel {
     this.schema = browserSchema;
     this.name = "Browser";
     this.model = this.connection.model(this.name, this.schema);
+    this.browserGroupModel = this.connection.model("BrowserGroup",browserGroupSchema)
   }
   async get() {
     try {
@@ -37,7 +39,7 @@ export default class BrowserModel extends BaseModel {
   }
   async getBrowserByGroup(groupId) {
     try {
-      const browser = await this.model.find({ groupId: groupId });
+      const browser = await this.model.find({ browserGroupId: groupId });
       return browser;
     } catch (error) {
       throw new ApplicationError(error, 500, {});

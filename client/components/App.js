@@ -38,7 +38,10 @@ class App extends React.Component {
       ],
       apps: [],
       app: [],
+      browsers:[],
+      browser:[],
       selectedApps: [],
+      selectedBrowser:[],
       wallpaper: "",
       isCircleSelected: false,
       isCenterSelected: false,
@@ -76,6 +79,20 @@ class App extends React.Component {
         result => {
           this.setState({
             apps: uniqBy(result.results, "appName")
+          });
+        },
+        error => {
+          this.setState({
+            error
+          });
+        }
+      );
+      fetch(`${apiUrl}/browser`)
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({
+            browsers:uniqBy(result.results, "browserName")
           });
         },
         error => {
@@ -124,18 +141,19 @@ class App extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    if (
-      !this.state.selectedGroups ||
-      !this.state.selectedApps ||
-      this.state.selectedApps.length === 0
-    ) {
-      this.setState({ errorMsg: "Please Select group and app first" });
-    }
+    // if (
+    //   !this.state.selectedGroups ||
+    //   !this.state.selectedApps ||
+    //   this.state.selectedApps.length === 0
+    // ) {
+    //   this.setState({ errorMsg: "Please Select group and app first" });
+    // }
     let data = {
       wallpaper: this.state.wallpaper,
 
       groupName: this.state.GroupName.label,
-      selectedApps: []
+      selectedApps: [],
+      selectedBrowser:[]
     };
     console.log(data, "DATA");
     this.state.selectedApps.forEach(app => {
@@ -144,6 +162,14 @@ class App extends React.Component {
         appName: app.label,
         appLink: app.appLink,
         isPlayStore:app.isPlayStore
+      });
+    });
+    this.state.selectedBrowser.forEach(app => {
+      console.log(app,"APP")
+      data.selectedBrowser.push({
+        browserName: app.label,
+        browserId: app.value,
+        browserLink: app.appLink,
       });
     });
 
@@ -250,6 +276,13 @@ class App extends React.Component {
                 isPlayStore:app.isPlayStore
               };
             }),
+            selectedBrowser: result.results[0].selectedBrowser.map(app => {
+              return {
+                label: app.browserName,
+                value: app.browserId,
+                appLink: app.browserLink,
+              };
+            }),
             GroupName: {
               label: result.results[0].groupName,
               value: result.results[0].groupName
@@ -278,6 +311,26 @@ class App extends React.Component {
                 value: app.appId,
                 appLink: app.appLink,
                 isPlayStore:app.isPlayStore
+              };
+            })
+          });
+        },
+        error => {
+          this.setState({
+            error
+          });
+        }
+      );
+      fetch(`${apiUrl}/browser/${GroupName.value}`)
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({
+            selectedBrowser: result.results.map(app => {
+              return {
+                label: app.browserName,
+                value: app.browserId,
+                appLink: app.browserLink
               };
             })
           });
@@ -319,6 +372,7 @@ class App extends React.Component {
     this.setState({ selectedApps });
   }
   render() {
+    console.log(this.state.browsers)
     return (
       <div>
         <HeaderComponent />
@@ -407,6 +461,21 @@ class App extends React.Component {
                 return { value: app.appId, label: app.appName };
               })}
               onChange={app => this.addMoreApp(app)}
+            />
+          </div>
+          <div className="row">
+            <label className="label" for="Store Manager Name">
+              <b>Select Browser</b>
+            </label>
+            <Select
+              className="value"
+              options={this.state.browsers.map(app => {
+                console.log(app,"YOOOOOO_YOOOOO")
+                return { label: app.browserName, value: app.browserGroupId ,appLink:app.browserLink};
+              })}
+              value={this.state.selectedBrowser}
+              onChange={selectedBrowser => this.setState({ selectedBrowser })}
+              isMulti
             />
           </div>
           <div className="row">
