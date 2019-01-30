@@ -27,26 +27,29 @@
 19,"Amazon Prime Video","market://details?id=com.flipkart.android",true
 20,"Netflix",market://details?id=com.flipkart.android,true
 21,Ezetap,"market://details?id=com.flipkart.android",true
+22,"Settings","market://details?id=com.flipkart.android",true
 ,Cashier ||9,,
-22,"My Airtel","market://details?id=com.flipkart.android",true
-23,eCAF,"market://details?id=com.flipkart.android",true
-24,Ezetap,"market://details?id=com.flipkart.android",true
+23,"My Airtel","market://details?id=com.flipkart.android",true
+24,eCAF,"market://details?id=com.flipkart.android",true
+25,Ezetap,"market://details?id=com.flipkart.android",true
 ,DigitalOR ||10,,
-25,"My Airtel","market://details?id=com.flipkart.android",true
-26,"airtel TV","market://details?id=com.flipkart.android",true
-27,eCAF,"market://details?id=com.flipkart.android",true
-28,"Amazon Prime Video","market://details?id=com.flipkart.android",true
-29,"Netflix","market://details?id=com.flipkart.android",true
+26,"My Airtel","market://details?id=com.flipkart.android",true
+27,"airtel TV","market://details?id=com.flipkart.android",true
+28,eCAF,"market://details?id=com.flipkart.android",true
+29,"Amazon Prime Video","market://details?id=com.flipkart.android",true
+30,"Netflix","market://details?id=com.flipkart.android",true
 ,Test ||11,,
-30,"Create","market://details?id=com.flipkart.android",true
-31,"Hi-5","market://details?id=com.flipkart.android",true
-32,"My Airtel","market://details?id=com.flipkart.android",true
-33,"airtel TV","market://details?id=com.flipkart.android",true
-34,eCAF,"market://details?id=com.flipkart.android",true
-35,"Wynk Music","market://details?id=com.flipkart.android",true
-36,"Amazon Prime Video","market://details?id=com.flipkart.android",true
-37,"Netflix",market://details?id=com.flipkart.android,true
-38,"Qudini queue management","www.Qudini queue management.com",true
-39,Ezetap,"market://details?id=com.flipkart.android",true
+31,"Create","market://details?id=com.flipkart.android",true
+32,"Hi-5","market://details?id=com.flipkart.android",true
+33,"My Airtel","market://details?id=com.flipkart.android",true
+34,"airtel TV","market://details?id=com.flipkart.android",true
+35,eCAF,"market://details?id=com.flipkart.android",true
+36,"Wynk Music","market://details?id=com.flipkart.android",true
+37,"Amazon Prime Video","market://details?id=com.flipkart.android",true
+38,"Netflix",market://details?id=com.flipkart.android,true
+39,"Qudini queue management","www.Qudini queue management.com",true
+40,Ezetap,"market://details?id=com.flipkart.android",true
+41,"Settings","market://details?id=com.flipkart.android",true
 ,Network ||12,,
-40,"Network","market://details?id=com.flipkart.android",true
+42,"Network","market://details?id=com.flipkart.android",true
+43,"Settings","market://details?id=com.flipkart.android",true
