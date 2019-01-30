@@ -6,8 +6,8 @@ import axios, { post } from "axios";
 import HeaderComponent from "./HeaderComponent";
 import { uniqBy } from "lodash";
 // FOR DEVELOPEMENT
-//let apiUrl = "http://localhost:8086"
-let apiUrl = "http://125.16.74.160:30630"
+let apiUrl = "http://localhost:8086"
+//let apiUrl = "http://125.16.74.160:30630"
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -38,6 +38,8 @@ class App extends React.Component {
       ],
       apps: [],
       app: [],
+      browsers:[],
+      browser:[],
       selectedApps: [],
       selectedBrowser:[],
       wallpaper: "",
@@ -77,6 +79,20 @@ class App extends React.Component {
         result => {
           this.setState({
             apps: uniqBy(result.results, "appName")
+          });
+        },
+        error => {
+          this.setState({
+            error
+          });
+        }
+      );
+      fetch(`${apiUrl}/browser`)
+      .then(res => res.json())
+      .then(
+        result => {
+          this.setState({
+            browsers:uniqBy(result.results, "browserName")
           });
         },
         error => {
@@ -125,13 +141,13 @@ class App extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    if (
-      !this.state.selectedGroups ||
-      !this.state.selectedApps ||
-      this.state.selectedApps.length === 0
-    ) {
-      this.setState({ errorMsg: "Please Select group and app first" });
-    }
+    // if (
+    //   !this.state.selectedGroups ||
+    //   !this.state.selectedApps ||
+    //   this.state.selectedApps.length === 0
+    // ) {
+    //   this.setState({ errorMsg: "Please Select group and app first" });
+    // }
     let data = {
       wallpaper: this.state.wallpaper,
 
@@ -146,6 +162,14 @@ class App extends React.Component {
         appName: app.label,
         appLink: app.appLink,
         isPlayStore:app.isPlayStore
+      });
+    });
+    this.state.selectedBrowser.forEach(app => {
+      console.log(app,"APP")
+      data.selectedBrowser.push({
+        browserName: app.label,
+        browserId: app.value,
+        browserLink: app.appLink,
       });
     });
 
@@ -348,6 +372,7 @@ class App extends React.Component {
     this.setState({ selectedApps });
   }
   render() {
+    console.log(this.state.browsers)
     return (
       <div>
         <HeaderComponent />
@@ -444,8 +469,9 @@ class App extends React.Component {
             </label>
             <Select
               className="value"
-              options={this.state.apps.map(app => {
-                return { label: app.appId, value: app.appName };
+              options={this.state.browsers.map(app => {
+                console.log(app,"YOOOOOO_YOOOOO")
+                return { label: app.browserName, value: app.browserGroupId ,appLink:app.browserLink};
               })}
               value={this.state.selectedBrowser}
               onChange={selectedBrowser => this.setState({ selectedBrowser })}

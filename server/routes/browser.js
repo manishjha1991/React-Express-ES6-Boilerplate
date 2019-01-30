@@ -11,3 +11,12 @@ export const getBrowserByGroup = route(async (req, res) => {
       throw new ApplicationError(error, 500, {});
     }
   });
+  export const get = route(async (req, res) => {
+    const browserModel = new BrowserModel();
+    try {
+     const browser = await browserModel.get();
+      res.send({ results: browser });
+    } catch (error) {
+      throw new ApplicationError(error, 500, {});
+    }
+  });

@@ -54,7 +54,7 @@ import {
 } from "./routes/app";
 
 import {
-  getBrowserByGroup as getBrowserByGroupRoutes
+  getBrowserByGroup as getBrowserByGroupRoutes,get as getBrowserRoutes
 } from "./routes/browser"
 export default function createRouter() {
   // *********
@@ -145,6 +145,7 @@ export default function createRouter() {
 
   //BROWSER
   router.get("/browser/:Id",   getBrowserByGroupRoutes);
+  router.get("/browser",   getBrowserRoutes);
 
   // ******************
   // * ERROR HANDLING *
