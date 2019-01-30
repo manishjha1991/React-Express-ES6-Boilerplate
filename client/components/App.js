@@ -6,8 +6,8 @@ import axios, { post } from "axios";
 import HeaderComponent from "./HeaderComponent";
 import { uniqBy } from "lodash";
 // FOR DEVELOPEMENT
-let apiUrl = "http://localhost:8086"
-//let apiUrl = "http://125.16.74.160:30630"
+//let apiUrl = "http://localhost:8086"
+let apiUrl = "http://125.16.74.160:30630"
 class App extends React.Component {
   constructor(props) {
     super(props);
